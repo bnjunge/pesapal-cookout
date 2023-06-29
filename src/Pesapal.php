@@ -16,11 +16,7 @@ class Pesapal
 
     public static function config()
     {
-        $config = new stdClass();
-        $config->pesapalConsumerKey = '';
-        $config->pesapalConsumerSecret = '';
-
-        return $config;
+        return config();
     }
 
     public static function pesapalAuth()
@@ -38,8 +34,8 @@ class Pesapal
         $data = Curl::PostToken($url, $headers, $body);
         $data = json_decode(json_encode($data));
 
-        jsonResponse($data);
-        // return $data;
+        // jsonResponse($data);
+        return $data;
     }
 
     public static function pesapalRegisterIPN()
@@ -66,7 +62,7 @@ class Pesapal
             self::$manager->updateOptions(['updatePesapalIPNID' => $data->message->ipn_id]);
         }
 
-        jsonResponse($data);
+        return $data;
     }
 
     public static function listIPNS()
@@ -83,7 +79,7 @@ class Pesapal
         $data = Curl::Get($url, $headers);
         $data = json_decode(json_encode($data));
 
-        jsonResponse($data);
+        $data;
     }
 
     public static function orderProcess($amount, $phone, $callback, $code)
@@ -137,7 +133,7 @@ class Pesapal
 
         $data = json_decode(json_encode($data));
 
-        jsonResponse($data);
+        return $data;
     }
 
 
