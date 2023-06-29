@@ -1,17 +1,20 @@
 {
-    "name": "nyash/pesapal-cookout",
-    "autoload": {
-        "psr-4": {
-            "BNjunge\\PesapalCookout\\": "src/"
-        }
+  "name": "nyash/pesapal-cookout",
+  "autoload": {
+    "psr-4": {
+      "BNjunge\\PesapalCookout\\": "src/"
     },
-    "authors": [
-        {
-            "name": "bnjunge",
-            "email": "survtechke@gmail.com"
-        }
-    ],
-    "require": {
-        "guzzlehttp/guzzle": "^7.7"
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "authors": [
+    {
+      "name": "bnjunge",
+      "email": "survtechke@gmail.com"
     }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "^7.7"
+  }
 }

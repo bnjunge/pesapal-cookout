@@ -1,9 +1,7 @@
 <?php
 
 namespace BNjunge\PesapalCookout;
-
-use stdClass;
-
+use function BNjunge\PesapalCookout\_config;
 
 class Pesapal
 {
@@ -16,7 +14,7 @@ class Pesapal
 
     public static function config()
     {
-        return config();
+        return _config();
     }
 
     public static function pesapalAuth()
@@ -38,7 +36,7 @@ class Pesapal
         return $data;
     }
 
-    public static function pesapalRegisterIPN()
+    public static function pesapalRegisterIPN($url)
     {
         $token = self::pesapalAuth();
 
@@ -48,7 +46,7 @@ class Pesapal
 
         $url = self::$pesapalBaseUrl . "/api/URLSetup/RegisterIPN";
         $headers = array("Content-Type" => "application/json", 'accept' => 'application/json', 'Authorization' => 'Bearer ' . $token->message->token);
-        $url = $_SERVER['HTTP_HOST'];
+        // $url = $_SERVER['HTTP_HOST'];
 
         $body = json_encode(array(
             "url" => "https://{$url}/pesapal/callback",
@@ -58,9 +56,6 @@ class Pesapal
         $data = Curl::Post($url, $headers, $body);
         $data = json_decode(json_encode($data));
 
-        if($data->success) {
-            self::$manager->updateOptions(['updatePesapalIPNID' => $data->message->ipn_id]);
-        }
 
         return $data;
     }
@@ -82,7 +77,7 @@ class Pesapal
         $data;
     }
 
-    public static function orderProcess($amount, $phone, $callback, $code)
+    public static function orderProcess($amount, $phone, $callback, $updatePesapalIPNID)
     {
         $token = self::pesapalAuth();
         $supportedCurrencies = strtoupper(self::$options->businessCurrency);
@@ -91,10 +86,10 @@ class Pesapal
             'id' => rand(0, 9999999999),
             'currency' => 'KES',
             'amount' => $amount,
-            'description' => $code,
+            'description' => 'testApi',
             'redirect_mode' => 'PARENT_WINDOW',
             'callback_url' => $callback,
-            'notification_id' => self::$options->updatePesapalIPNID,
+            'notification_id' => $updatePesapalIPNID,
             'billing_address' => array(
                 'phone_number' => $phone
             )

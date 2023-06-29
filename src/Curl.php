@@ -85,7 +85,6 @@ class Curl
         return [
             'success' => $statusCode >= 200 && $statusCode < 300,
             'message' => json_decode($body),
-            'requestHeaders' => self::$client
         ];
     }
 
