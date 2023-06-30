@@ -21,7 +21,12 @@ require_once '../vendor/autoload.php';
 // jsonResponse($ipns);
 
 # Initiate Payment Process
-$payRequest = Pesapal::orderProcess(2, 254716437799, 'https://a402-196-98-165-213.ngrok-free.app/example/pay.php', '09181b33-aca7-4781-99ef-de7cfabf79f5');
+$amount = 2;
+$phone = '';
+$validation_callback = '';
+$ipnId = '';
+
+$payRequest = Pesapal::orderProcess($amount, $phone, $validation_callback, $ipnId);
 jsonResponse($payRequest);
 
 # Validate Payment
